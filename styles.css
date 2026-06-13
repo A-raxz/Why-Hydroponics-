@@ -127,14 +127,23 @@ html { scroll-behavior: smooth; overflow-x: clip; }
 body {
   font-family: var(--font-body);
   background-color: var(--bg);
-  background-image: var(--body-bg);
-  background-attachment: fixed;
   color: var(--ink);
   line-height: 1.6;
   overflow-x: hidden;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* fixed, composited backdrop — avoids the per-frame repaint that
+   `background-attachment: fixed` triggers on scroll (big jank win on mobile) */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--body-bg);
 }
 
 ::selection { background: var(--leaf); color: var(--bg); }
@@ -182,9 +191,7 @@ h1, h2, h3 { font-family: var(--font-display); }
 
 .grain {
   position: fixed;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
+  inset: 0;
   pointer-events: none;
   z-index: 4;
   opacity: var(--grain-o);
@@ -559,17 +566,26 @@ html.js .cs-h:not(.is-first) { opacity: 0; }
 }
 
 .marquee-track {
-  display: inline-flex;
-  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
   padding-block: 1.05rem;
   animation: scroll-x var(--mq-dur, 30s) linear infinite;
   will-change: transform;
+  backface-visibility: hidden;
 }
+.marquee:hover .marquee-track { animation-play-state: paused; }
 .marquee[data-direction="right"] .marquee-track { animation-direction: reverse; }
-@keyframes scroll-x { to { transform: translateX(-50%); } }
+/* --mq-shift is set in JS to one set's exact pixel width (a px transform
+   stays on the GPU compositor; a % transform may not) */
+@keyframes scroll-x {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(var(--mq-shift, -50%), 0, 0); }
+}
 
 .marquee-group {
-  display: inline-flex;
+  display: flex;
+  flex: none;
   align-items: center;
   gap: 2.4rem;
   padding-right: 2.4rem;
@@ -687,6 +703,9 @@ html.pin .stage-dots {
   letter-spacing: -0.04em;
   display: flex;
   align-items: baseline;
+  /* symmetric padding so background-clip:text doesn't crop the trailing
+     glyph (e.g. the % ) when negative letter-spacing shrinks the paint box */
+  padding-inline: 0.16em;
   background: linear-gradient(120deg, var(--ink) 12%, var(--accent, var(--leaf)) 85%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -808,6 +827,8 @@ html[data-theme="light"] .stat-card[data-accent="sun"] { --accent: #558b2f; }
   letter-spacing: -0.03em;
   display: flex;
   align-items: baseline;
+  /* room so the trailing % isn't cropped by background-clip:text */
+  padding-right: 0.14em;
   background: linear-gradient(135deg, var(--ink) 30%, var(--accent));
   -webkit-background-clip: text;
   background-clip: text;
