@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,12 +12,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="styles.css" />
   <script>
     document.documentElement.classList.add('js');
     try {
-      if (localStorage.getItem('fs-theme') === 'light') {
-        document.documentElement.setAttribute('data-theme', 'light');
+      /* default is light; only honour an explicit saved dark preference */
+      if (localStorage.getItem('fs-theme') === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
       }
     } catch (e) {}
   </script>
@@ -46,7 +47,7 @@
       <a href="#why">Why it wins</a>
     </nav>
     <a class="nav-cta" href="#join">Join us</a>
-    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to light mode" aria-pressed="false">
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to dark mode" aria-pressed="true">
       <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
         <circle cx="12" cy="12" r="3.6" />
         <line x1="12" y1="2.8" x2="12" y2="5" /><line x1="12" y1="19" x2="12" y2="21.2" />
@@ -558,13 +559,13 @@
   <footer class="footer">
     <span>© 2026 Farmspherica Innovations Pvt.&nbsp;Ltd.</span>
     <span class="footer-tag">Grown without soil 💧</span>
-    <span class="footer-stack">HTML · CSS · JS — anime.js / GSAP / three.js</span>
+    <span class="footer-stack">The First Cohort</span>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-  <script src="/main.js" defer></script>
+  <script src="main.js" defer></script>
 </body>
 </html>
