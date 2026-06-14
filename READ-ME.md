@@ -1,6 +1,6 @@
 # "Why Hydroponics?" Animated Infographic 🌿
 
-Welcome to my hackathon project! This is a one-page, interactive scrolling infographic designed to showcase the incredible benefits of hydroponic farming.
+Welcome to my hackathon project for The Grow Hackathon! This is a one-page, interactive scrolling infographic designed to showcase the incredible benefits of hydroponic farming.
 
 ## 🚀 The Website
 Check out the live website here: [whyhydroponics.vercel.app]
