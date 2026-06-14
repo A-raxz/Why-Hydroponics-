@@ -28,4 +28,6 @@ When I step away from the keyboard, you can usually find me reading a good book 
 
 * **Tech Stack:** Pure HTML, CSS, and JavaScript.
 
+* **Mobile Integration** Works properly on mobile devices. When using laptop to check if it works on mobile make sure to refresh your screen.
+
 
